@@ -422,38 +422,26 @@
       </div>
 
       <!--
-        CONNECT A FORM BACKEND (to take inquiries directly through the site):
-        add an action attribute to this form, e.g.
-          <form ... action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        js/main.js detects the action and submits via fetch with an inline success
-        message. Works with Formspree, Basin, or your own endpoint. With no action
-        set (current state), submitting falls back to opening the visitor's email
-        client (mailto).
+        Inquiries are collected via a Formspace form (hosted at forms.space) embedded
+        inline below — submissions appear in the Formspace dashboard and trigger any
+        email/webhook workflows configured there. The embed script is loaded at the
+        bottom of this page. If the embed can't load (JS disabled, script blocked),
+        the fallback link below the embed still reaches the hosted form directly.
+
+        NOTE: an earlier custom-built form with fetch/mailto handling lives in git
+        history (and its handler is still in js/main.js) — restore it if you ever
+        switch to an endpoint-style backend such as Formspree.
       -->
-      <form class="contact-form reveal delay-1" id="contactForm" novalidate>
-        <div class="form-row">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" autocomplete="name" required>
-        </div>
-
-        <div class="form-row">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" required>
-        </div>
-
-        <div class="form-row">
-          <label for="company">Company</label>
-          <input type="text" id="company" name="company" autocomplete="organization">
-        </div>
-
-        <div class="form-row">
-          <label for="message">What do you need help with?</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-glow">Submit</button>
-        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-      </form>
+      <div class="contact-form-embed reveal delay-1">
+        <div data-formspace="https://merciless-alarm-823.forms.space/cyberknight-cybersecurity-readiness-review-request-wq6e8j"></div>
+        <p class="embed-fallback">
+          Form not loading?
+          <a href="https://merciless-alarm-823.forms.space/cyberknight-cybersecurity-readiness-review-request-wq6e8j"
+             target="_blank" rel="noopener">Open the request form in a new tab</a>
+          <!-- REPLACE: placeholder email — update to your real business email -->
+          or email <a href="mailto:hello@knightwatchcyber.com">hello@knightwatchcyber.com</a>.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -499,5 +487,7 @@
 </footer>
 
 <script src="js/main.js"></script>
+<!-- Formspace embed loader — renders any element with a data-formspace attribute -->
+<script src="https://formspace.com/embed.js" defer crossorigin></script>
 </body>
 </html>

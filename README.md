@@ -73,16 +73,11 @@ The repo is Pages-ready (a `.nojekyll` file is included so GitHub serves files a
 
 ### 3. Taking inquiries through the site
 
-The contact form auto-upgrades: give the `<form id="contactForm">` in `index.html` an
-`action` URL and `js/main.js` submits it via fetch with an inline success message — no
-other changes needed. Easiest backend: [Formspree](https://formspree.io) (free tier,
-50 submissions/month) — create a form there and set:
-```html
-<form ... action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-```
+Done — a Formspace form is embedded in the contact section (see "Contact form" below).
 For a self-owned backend later, move hosting to Cloudflare Pages or Netlify (both free
-for this) and point the form at a serverless function that emails you via
-Resend/SES/Postmark. The front end needs no changes beyond the `action` URL.
+for this) and point a native form at a serverless function that emails you via
+Resend/SES/Postmark; the previous native form + fetch handler is preserved in git
+history and `js/main.js`.
 
 ### 4. Email @ your domain
 
@@ -123,17 +118,19 @@ Search the project for `REPLACE:` comments — each marks something to update:
 
 ## Contact form
 
-The contact form (`#contactForm` in `index.html`, handled in `js/main.js`) picks its
-mode automatically:
+Inquiries are collected through a **Formspace** form (hosted at forms.space) embedded
+inline in the contact section via Formspace's official embed script
+(`https://formspace.com/embed.js`, loaded at the bottom of `index.html`). Submissions
+land in the Formspace dashboard; configure email notifications / workflows there
+(Formspace → form → Workflows). A fallback link under the embed opens the hosted form
+directly if the embed can't load. This is the site's only external script — style the
+form's colors inside Formspace to match the site theme (dark navy `#0d1633`,
+text `#edf1fa`, gold accent `#d4a94e`).
 
-- **Backend mode** — if the `<form>` has an `action` URL, submissions go there via
-  `fetch` (as `FormData`, with `Accept: application/json`) and the visitor sees an
-  inline success or error message. Works with Formspree, Basin, or any endpoint that
-  accepts form posts and returns 2xx on success.
-- **Mailto fallback** — with no `action` set (the current state), submitting opens the
-  visitor's email client with a prefilled message.
-
-See "Deploying → Taking inquiries through the site" above for setup.
+**If you ever switch to an endpoint-style backend** (e.g. Formspree): the previous
+custom-built form markup lives in git history, and its submit handler is still in
+`js/main.js` — it auto-detects a form `action` URL (fetch + inline success message)
+and falls back to mailto without one.
 
 ## Design & animation notes
 

@@ -938,6 +938,28 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   border-radius: var(--radius-lg);
   padding: 2rem;
 }
+
+/* Formspace embed container — same card treatment as the native form */
+.contact-form-embed {
+  background: linear-gradient(160deg, var(--bg-navy-2), rgba(6, 9, 20, 0.9));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem;
+  overflow: hidden;
+}
+.contact-form-embed [data-formspace] {
+  min-height: 480px; /* reserve space so the page doesn't jump while the embed loads */
+}
+.contact-form-embed iframe {
+  border: 0;
+  width: 100%;
+  border-radius: calc(var(--radius-lg) - 6px);
+}
+.embed-fallback {
+  margin: 0.9rem 0.5rem 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
 .form-row { display: flex; flex-direction: column; gap: 0.45rem; }
 .form-row label { font-size: 0.9rem; font-weight: 650; color: var(--text-primary); }
 .form-row input,
